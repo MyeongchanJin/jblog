@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<context:annotation-config />
+	<context:component-scan 
+		base-package="com.bitacademy.jblog.repository
+					com.bitacademy.jblog.service
+					com.bitacademy.jblog.exception">
+		<context:include-filter type="annotation" 
+		expression="org.springframework.stereotype.Component"/>
+		<context:include-filter type="annotation"
+		expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation"
+		expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	 
+	<!-- DataSource (Oracle) -->
+	<bean id="oracleDataSource" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="user" value="jblog" />
+		<property name="password" value="jblog" />
+		<property name="connectionCachingEnabled" value="true" />
+	</bean>
+	
+	<!-- MyBatis SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- dataSource 속성에는 dataSource Bean의 id를 참조로 넘겨줘야 한다 -->
+		<property name="dataSource" ref="oracleDataSource" />
+		<property name="configLocation" value="classpath:mybatis/configuration.xml" />
+	</bean>
+	
+	<!-- MyBatis SqlSessionTemplate -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+</beans>
