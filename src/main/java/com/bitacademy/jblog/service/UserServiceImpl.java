@@ -15,7 +15,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean join(UserVo vo) {
 		int insertedCount = userDao.insert(vo);
-		return 1 == insertedCount;
+		int insertedBlogCount = userDao.insertBlog(vo);
+		return (1 == insertedCount && 1 == insertedBlogCount);
 	}
 
 	@Override

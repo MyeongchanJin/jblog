@@ -12,7 +12,7 @@
 <h1>Join</h1>
 	<form action="<c:url value="/user/join" />" method="post">
 		<label>이름</label>
-		<input type="text" name="name" />
+		<input type="text" name="userName" />
 		<br>
 		<label>아이디</label>
 		<input type="text" name="id" />

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,9 +30,16 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String joinAction() {
-		return "user/joinform";
+	public String joinAction(@ModelAttribute UserVo vo) {
 		
+		boolean isSuccess = false;
+		isSuccess = userService.join(vo);
+		logger.debug("join: " + vo);
+		if (isSuccess) {
+			return "redirect:/user/joinsuccess";			
+		} else {
+			return "redirect:/user/join";
+		}
 	}
 	
 	@RequestMapping("/joinsuccess")
@@ -45,7 +53,7 @@ public class UserController {
 		logger.debug("Join");
 		return "user/loginform";
 	}
-
+	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginAction(
 			@RequestParam(value="id", required=false) String id,
@@ -56,18 +64,27 @@ public class UserController {
 			return "redirect:/user/login";
 		}
 		
-		UserVo authMember = userService.getUser(id, password);
-		if (authMember == null) {
+		UserVo authUser= userService.getUser(id, password);
+		if (authUser == null) {
 			//	사용자를 찾지 못함
+			logger.debug("Login Failed");
 			return "redirect:/user/login";
 		} else {
 			//	세션 등록 후 홈페이지로 리다이렉트
-			session.setAttribute("authMember", authMember);
+			session.setAttribute("authUser", authUser);
+			logger.debug("Login Success");
+			logger.debug("authUser: " + authUser);
 			return "redirect:/";
 		}
-		
-		//return "user/loginform";
-		
+
+		//return "user/loginform";	
 	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logoutAction(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 }
 

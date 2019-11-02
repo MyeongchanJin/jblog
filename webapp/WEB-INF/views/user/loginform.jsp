@@ -15,7 +15,7 @@
 		method="POST" 
 		action="<c:url value="/user/login"/>">
 		
-		<label class="block-label" for="email">아이디</label> 
+		<label class="block-label" for="id">아이디</label> 
 		<input id="id" name="id" type="text" value=""> 
 
 		<label class="block-label">패스워드</label> 
