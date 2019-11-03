@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitacademy.jblog.repository.BlogVo;
 import com.bitacademy.jblog.repository.UserVo;
+import com.bitacademy.jblog.service.BlogService;
 import com.bitacademy.jblog.service.UserService;
 
 @Controller
@@ -21,6 +23,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	BlogService blogService;
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String joinForm() {
@@ -64,7 +69,7 @@ public class UserController {
 			return "redirect:/user/login";
 		}
 		
-		UserVo authUser= userService.getUser(id, password);
+		UserVo authUser = userService.getUser(id, password);
 		if (authUser == null) {
 			//	사용자를 찾지 못함
 			logger.debug("Login Failed");

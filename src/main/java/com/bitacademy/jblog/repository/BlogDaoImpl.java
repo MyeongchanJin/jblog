@@ -17,11 +17,19 @@ public class BlogDaoImpl implements BlogDao {
 		List<BlogVo> list = sqlSession.selectList("blog.selectAll");
 		return list;
 	}
+	
+	@Override
+	public BlogVo selectBlogUser(Long userNo) {
+		BlogVo master = sqlSession.selectOne("blog.selectByUserNo", userNo);
+		return master;
+	}
 
 	@Override
 	public int insert(BlogVo vo) {
 		int insertedCount = sqlSession.insert("blog.insert", vo);
 		return insertedCount;
 	}
+
+
 
 }

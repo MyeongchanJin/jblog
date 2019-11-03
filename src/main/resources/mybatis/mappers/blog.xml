@@ -12,6 +12,13 @@
 	]]>
 	</select>
 	
+	<select id="selectByUserNo" parameterType="string" resultType="BlogVo">
+	<![CDATA[
+		SELECT userNo, blogTitle, logoFile FROM blog
+		WHERE blog.userNo=#{no}
+	]]>
+	</select>
+	
 	<!-- Set Board 5-7-7. Write SQL Query -->
 	<insert id="insert" parameterType="BlogVo">
 	<![CDATA[

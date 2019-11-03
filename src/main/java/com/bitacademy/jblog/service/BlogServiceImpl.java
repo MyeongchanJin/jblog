@@ -7,23 +7,29 @@ import org.springframework.stereotype.Service;
 
 import com.bitacademy.jblog.repository.BlogDao;
 import com.bitacademy.jblog.repository.BlogVo;
+import com.bitacademy.jblog.repository.UserVo;
 
 @Service
 public class BlogServiceImpl implements BlogService {
 
 	@Autowired
-	BlogDao blogDaoImpl;
+	BlogDao blogDao;
 	
 	@Override
 	public List<BlogVo> getList() {
-		List<BlogVo> list = blogDaoImpl.selectAll();
+		List<BlogVo> list = blogDao.selectAll();
 		return list;
 	}
 
 	@Override
-	public boolean write(BlogVo vo) {
-		int insertedCount = blogDaoImpl.insert(vo);
-		return 1 == insertedCount;
+	public BlogVo getBlogUser(Long userNo) {
+		BlogVo bvo = blogDao.selectBlogUser(userNo);
+		return bvo;
 	}
 
+	@Override
+	public boolean write(BlogVo bvo) {
+		int insertedCount = blogDao.insert(bvo);
+		return 1 == insertedCount;
+	}
 }

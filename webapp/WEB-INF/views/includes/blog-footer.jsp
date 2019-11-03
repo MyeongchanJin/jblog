@@ -3,5 +3,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <footer id="blog-footer">
-	<p>${authUser.userName }의 블로그 is powered by JBlog &copy;2018</p>
+	<p>${bloger.userName }의 블로그 is powered by JBlog &copy;2019</p>
 </footer>
