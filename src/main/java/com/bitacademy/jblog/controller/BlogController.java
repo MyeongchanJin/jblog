@@ -40,4 +40,9 @@ public class BlogController {
 		
 		return "blog/blogmain";
 	}
+	
+	@RequestMapping("/admin/settings")
+	public String blogSettings() {
+		return "blog/admin/admin";
+	}
 }
