@@ -32,6 +32,7 @@ public class BlogController {
 		logger.debug("bloger: " + bloger);
 		 
 		BlogVo blog = blogService.getBlogUser(bloger.getUserNo());
+		blog.setBlogTitle(bloger.getUserName() + "의 블로그입니다.");
 		logger.debug("blog: " + blog);
 				
 		logger.debug("authUser: " + session.getAttribute("authUser"));

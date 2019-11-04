@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <header id="blog-header">
-	<h1>${bloger.userName }의 블로그 입니다.</h1>
+	<h1>${blog.blogTitle }</h1>
 
 	<ul>
 		<c:choose>

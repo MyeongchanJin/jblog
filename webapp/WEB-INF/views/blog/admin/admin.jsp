@@ -24,75 +24,10 @@
                     <li><a href="<c:url value="/${authUser.id }/admin/post"/>">글 작성</a></li>
                 </ul>
             </nav>
-
-            <div id="content" class="tab-cont">
-                <div class="conti conti1">
-
-                    <div class="section">
-                        <label>블로그 제목</label>
-                        <input class="blog-title" type="text" name="blog-title">
-                    </div>
-                    <div class="section section-logo">
-                        <label>로고 이미지</label>
-                        <img width="200px" src="<c:url value="/images/springbasic.png"/>" alt="">
-                        <br>
-                        <div>
-                            <button type="button">파일선택</button>
-                            <label>선택한 파일 없음</label>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <input class="save-btn" type="submit" value="기본설정변경" name="save">
-                    </div>
-
-             
-                </div>
-                <div class="conti conti2">
-                    <div class="category-list">
-                        <table>
-                            <tr>
-                                <th>번호</th>
-                                <th>카테고리명</th>
-                                <th>포스트 수</th>
-                                <th>설명</th>
-                                <th>삭제</th>
-                            </tr>
-                            <tr>
-                                <td>${cateNo}</td>
-                                <td>${cateName}</td>
-                                <td>포스트 수---post</td>
-                                <td>${description}</td>
-                                <td><button type="button">삭제</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="add-category-box">
-                        <h3>새로운 카테고리 추가</h3>
-                        <div>
-                            <div><label for="cate-name">카테고리명</label><input type="text" name="cate-name"></div>
-                            <div><label for="cate-desc">설명</label><input type="text" name="cate-desc"></div>
-                        </div>
-                        <button type="submit">카테고리 추가</button>
-                    </div>
-
-                </div>
-                <div class="conti conti3">
-                    <div>
-                        <label for="">제목</label>
-                        <input type="text" name="post-title">
-                        <select name="cate-name">
-                            <option value="스프링MVC">스프링MVC</option>
-                            <option value="서블릿_JSP">서블릿_JSP</option>
-                            <option value="오라클">오라클</option>
-                            <option value="자바프로그래밍">자바프로그래밍</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="">내용</label>
-                        <textarea name="post-content" cols="30" rows="10"></textarea>
-                    </div>
-                    <button type="submit">포스트 하기</button>
-                </div>
+			<div id="content" class="tab-cont">
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic" />
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-category" />
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-post" />
             </div>
 
             <div id="sidemenu">
