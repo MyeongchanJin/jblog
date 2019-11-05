@@ -25,9 +25,11 @@
                 </ul>
             </nav>
 			<div id="content" class="tab-cont">
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic" />
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-category" />
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-post" />
+				
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-category.jsp" charEncoding="UTF-8"/>
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-post.jsp" charEncoding="UTF-8"/>
+				
             </div>
 
             <div id="sidemenu">
@@ -43,9 +45,11 @@
             </div>
         </div>
         <c:import url="/WEB-INF/views/includes/blog-footer.jsp"/>
-    </div>		
+    </div>
+
 	</body>
 	<script>
+	
     $(function () {
         var tabBtn = $(".tab-btn > ul > li");
         var tabCont = $(".tab-cont > div");
@@ -62,5 +66,6 @@
             tabCont.eq(index).css("display", "block");
         });
     });
+    
 </script>
 </html>
