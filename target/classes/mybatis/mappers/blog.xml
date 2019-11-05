@@ -26,5 +26,11 @@
 		VALUES (seq_board_no.NEXTVAL, #{title}, #{content}, #{memberNo})
 	]]>
 	</insert>
+	
+	<update id="updateBlogTitle" parameterType="BlogVo">
+	<![CDATA[
+		UPDATE blog SET blogtitle = #{blogTitle} WHERE userNo = #{userNo}
+	]]>
+	</update>
 
 </mapper>

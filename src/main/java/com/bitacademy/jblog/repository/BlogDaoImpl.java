@@ -30,6 +30,12 @@ public class BlogDaoImpl implements BlogDao {
 		return insertedCount;
 	}
 
+	@Override
+	public int updateBlogTitle(BlogVo bvo) {
+		int updatedCount = sqlSession.update("blog.updateBlogTitle", bvo);
+		return updatedCount;
+	}
+
 
 
 }

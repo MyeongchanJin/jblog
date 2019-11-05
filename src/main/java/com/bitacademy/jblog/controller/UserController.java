@@ -38,9 +38,12 @@ public class UserController {
 	public String joinAction(@ModelAttribute UserVo vo) {
 		
 		boolean isSuccess = false;
+		boolean isSuccessJoin = false;
 		isSuccess = userService.join(vo);
+		vo.setUserName(vo.getUserName() + "의 블로그입니다.");
+		isSuccessJoin = userService.joinBlog(vo);
 		logger.debug("join: " + vo);
-		if (isSuccess) {
+		if (isSuccess && isSuccessJoin) {
 			return "redirect:/user/joinsuccess";			
 		} else {
 			return "redirect:/user/join";
@@ -55,7 +58,7 @@ public class UserController {
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginForm() {
 		
-		logger.debug("Join");
+		logger.debug("Login");
 		return "user/loginform";
 	}
 	
@@ -70,15 +73,24 @@ public class UserController {
 		}
 		
 		UserVo authUser = userService.getUser(id, password);
+		
+
 		if (authUser == null) {
 			//	사용자를 찾지 못함
 			logger.debug("Login Failed");
 			return "redirect:/user/login";
 		} else {
+			BlogVo authBlog = blogService.getBlogByUserNo(authUser.getUserNo());
+			
+
 			//	세션 등록 후 홈페이지로 리다이렉트
 			session.setAttribute("authUser", authUser);
+			session.setAttribute("authBlog", authBlog);
+
 			logger.debug("Login Success");
 			logger.debug("authUser: " + authUser);
+			logger.debug("authBlog: " + authBlog);
+
 			return "redirect:/";
 		}
 

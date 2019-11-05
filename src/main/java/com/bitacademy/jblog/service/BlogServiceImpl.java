@@ -22,7 +22,7 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public BlogVo getBlogUser(Long userNo) {
+	public BlogVo getBlogByUserNo(Long userNo) {
 		BlogVo bvo = blogDao.selectBlogUser(userNo);
 		return bvo;
 	}
@@ -31,5 +31,11 @@ public class BlogServiceImpl implements BlogService {
 	public boolean write(BlogVo bvo) {
 		int insertedCount = blogDao.insert(bvo);
 		return 1 == insertedCount;
+	}
+
+	@Override
+	public boolean updateBlogTitle(BlogVo bvo) {
+		int updatedCount = blogDao.updateBlogTitle(bvo);
+		return 1 == updatedCount;
 	}
 }

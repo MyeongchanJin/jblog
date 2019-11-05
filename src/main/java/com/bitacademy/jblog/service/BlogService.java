@@ -6,6 +6,7 @@ import com.bitacademy.jblog.repository.BlogVo;
 
 public interface BlogService {
 	public List<BlogVo> getList();
-	public BlogVo getBlogUser(Long userNno);
-	public boolean write(BlogVo vo);
+	public BlogVo getBlogByUserNo(Long userNo);
+	public boolean write(BlogVo bvo);
+	public boolean updateBlogTitle(BlogVo bvo);
 }

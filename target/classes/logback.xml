@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- configuration -->
-<configuration debug="true">
+<configuration debug="false">
 	<!-- Appender: Log settings -->
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -38,7 +38,7 @@
 		<appender-ref ref="consoleAppender" />
 	</logger>
 	<!-- 내부에서 발생하는 모든 메시지 -->
-	<root level="TRACE">
+	<root level="WARN">
 		<appender-ref ref="fileAppender" />
 	</root>
 </configuration>

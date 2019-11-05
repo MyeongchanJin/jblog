@@ -34,7 +34,7 @@
 
             <div id="sidemenu">
                 <div id="logo">
-                    <img alt="" src="" />
+                    <img alt="" src="<c:url value="/images/springbasic.png"/>" />
                 </div>
                 <div>
                     <h4>카테고리</h4>

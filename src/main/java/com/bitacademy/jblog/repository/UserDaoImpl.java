@@ -38,8 +38,7 @@ public class UserDaoImpl implements UserDao {
 
 			int insertedCount = sqlSession.insert("user.insert", vo);
 				logger.debug("inserted: " + vo);
-
-			
+	
 			return insertedCount;
 	}
 	

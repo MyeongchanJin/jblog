@@ -15,8 +15,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean join(UserVo vo) {
 		int insertedCount = userDao.insert(vo);
+		return 1 == insertedCount;
+	}
+	
+	@Override
+	public boolean joinBlog(UserVo vo) {
 		int insertedBlogCount = userDao.insertBlog(vo);
-		return (1 == insertedCount && 1 == insertedBlogCount);
+		return 1 == insertedBlogCount;
 	}
 
 	@Override
@@ -30,5 +35,7 @@ public class UserServiceImpl implements UserService {
 		UserVo vo = userDao.selectUser(id);
 		return vo;
 	}
+
+
 
 }
