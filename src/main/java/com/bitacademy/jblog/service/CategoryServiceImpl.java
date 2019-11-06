@@ -1,6 +1,7 @@
 package com.bitacademy.jblog.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public boolean insertCategory(CategoryVo cvo) {
 		int insertedCategoryCount = categoryDao.insertCategory(cvo);
 		return 1 == insertedCategoryCount;
+	}
+	
+	@Override
+	public List<Map<String, String>> getPostNum(CategoryVo cvo) {
+		List<Map<String, String>> numList = categoryDao.getNumOfPost(cvo);
+		return numList;
 	}
 
 }

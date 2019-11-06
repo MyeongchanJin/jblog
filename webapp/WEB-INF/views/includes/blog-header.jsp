@@ -9,7 +9,7 @@
 		<c:choose>
 			<c:when test="${authUser.userNo == bloger.userNo}">
 				<li><a href="<c:url value="/user/logout" />">로그아웃</a></li>
-				<li><a href="<c:url value="/${authUser.id }/admin/settings" />">내블로그 관리</a></li>			
+				<li><a href="<c:url value="/${authUser.id }/admin/admin" />">내블로그 관리</a></li>			
 			</c:when>
 			
 			<c:when test="${not empty authUser }">

@@ -99,7 +99,7 @@
             font-size: 1.2em;
             padding: 10px;
         }
-        nav>ul>li.active {
+        .tab-btn>ul>li>a:active {
             font-weight: 600;
         }
 

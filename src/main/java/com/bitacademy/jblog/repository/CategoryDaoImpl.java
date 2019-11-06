@@ -1,6 +1,7 @@
 package com.bitacademy.jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class CategoryDaoImpl implements CategoryDao {
 	public int insertCategory(CategoryVo cvo) {
 		int insertedCategoryCount = sqlSession.insert("category.insertCategory", cvo);
 		return insertedCategoryCount;
+	}
+	
+	@Override
+	public List<Map<String, String>> getNumOfPost(CategoryVo cvo) {
+		List<Map<String, String>> postNumList = sqlSession.selectList("post.selectNumOfPost", cvo);
+		return postNumList;
 	}
 
 }

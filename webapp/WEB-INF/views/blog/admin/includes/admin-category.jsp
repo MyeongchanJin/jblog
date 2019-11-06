@@ -21,12 +21,15 @@
         	</c:forEach>
         </table>
     </div>
-    <div class="add-category-box">
-        <h3>새로운 카테고리 추가</h3>
-        <div>
-            <div><label for="cate-name">카테고리명</label><input type="text" name="cate-name"></div>
-            <div><label for="cate-desc">설명</label><input type="text" name="cate-desc"></div>
-        </div>
-        <button type="submit">카테고리 추가</button>
-    </div>
+    <form action="<c:url value="/${authUser.id }/admin/category" />" method="POST">
+	    <div class="add-category-box">
+	        <h3>새로운 카테고리 추가</h3>
+	        <div>
+	            <div><label for="cate-name">카테고리명</label><input type="text" name="cate-name"></div>
+	            <div><label for="cate-desc">설명</label><input type="text" name="cate-desc"></div>
+	        </div>
+	        <input type="submit" name="submit" value="카테고리 추가">
+	    </div>
+    </form>
+
 </div>

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- Set Board 4-3. Create mapper file  -->
+
 <mapper namespace="category">
 
 	<insert id="insertCategory" parameterType="CategoryVo">
 	<![CDATA[
 		INSERT INTO category (cateNo, userNo, cateName, description, regdate)
-		VALUES (seq_category_no.NEXTVAL, #{userNo}, #{cateName}, #{descripton}, sysdate)
+		VALUES (seq_category_no.NEXTVAL, #{userNo}, #{cateName}, #{description}, sysdate)
 	]]>
 	</insert>
 	
 	<select id="selectAllCategory" resultType="CategoryVo">
 	<![CDATA[
-		SELECT cateNo, userNo, cateName, description FROM category
+		SELECT cateNo, userNo, cateName, description, regDate FROM category
+		ORDER BY cateNo DESC
+	]]>
+	</select>
+	
+	<select id="selectNumOfPost" resultType="map">
+	<![CDATA[
+		SELECT cateNo, COUNT(*) FROM post GROUP BY cateNo;
 	]]>
 	</select>
 </mapper>

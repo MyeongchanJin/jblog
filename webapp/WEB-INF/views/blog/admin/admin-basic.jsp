@@ -25,21 +25,7 @@
                 </ul>
             </nav>
 			<div id="content" class="tab-cont">
-				<c:choose>
-					<c:when test="${opt eq 'basic' }">
-						<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
-					</c:when>
-					<c:when test="${opt eq 'category' }">
-						<c:import url="/WEB-INF/views/blog/admin/includes/admin-category.jsp" charEncoding="UTF-8"/>
-					</c:when>
-					<c:when test="${opt eq 'write' }">
-						<c:import url="/WEB-INF/views/blog/admin/includes/admin-post.jsp" charEncoding="UTF-8"/>
-					</c:when>
-					<c:otherwise>
-						<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
-					</c:otherwise>				
-				</c:choose>
-	
+				<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
             </div>
 
             <div id="sidemenu">

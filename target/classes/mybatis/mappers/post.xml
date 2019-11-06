@@ -4,10 +4,16 @@
 <!-- Set Board 4-3. Create mapper file  -->
 <mapper namespace="post">
 
+	<select id="selectAllPost" resultType="PostVo">
+	<![CDATA[
+		SELECT postNo, cateNo, postTitle, postContent FROM post
+	]]>
+	</select>
+	
 	<insert id="insertPost" parameterType="PostVo">
 	<![CDATA[
 		INSERT INTO post (postNo, cateNo, postTitle, postContent, regDate)
-    	VALUES (seq_post_no.NEXTVAL, #{cateNo}, #{postTitle}, #{postContent}, sysdate);
+    	VALUES (seq_post_no.NEXTVAL, #{cateNo}, #{postTitle}, #{postContent}, sysdate)
 	]]>
 	</insert>
 	
@@ -16,12 +22,6 @@
 		SELECT postNo, postContent FROM post
 		WHERE postNo = (SELECT MAX(postNo) FROM post) AND cateNo = #{cateNo}
 	]]>		
-	</select>
-	
-	<select id="selectNumOfPost" parameterType="PostVo" resultType="map">
-	<![CDATA[
-		SELECT COUNT(*) FROM post WHERE cateNo = #{cateNo}
-	]]>
 	</select>
 
 </mapper>
