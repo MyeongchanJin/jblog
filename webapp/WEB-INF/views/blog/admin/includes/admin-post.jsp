@@ -4,7 +4,7 @@
     <div>
         <label for="">제목</label>
         <input type="text" name="post-title">
-        <select name="cate-name">
+        <select name="post-category">
             <option value="스프링MVC">스프링MVC</option>
             <option value="서블릿_JSP">서블릿_JSP</option>
             <option value="오라클">오라클</option>

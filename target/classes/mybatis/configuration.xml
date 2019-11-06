@@ -6,9 +6,13 @@
 	<typeAliases>
 		<typeAlias alias="UserVo" type="com.bitacademy.jblog.repository.UserVo" />
 		<typeAlias alias="BlogVo" type="com.bitacademy.jblog.repository.BlogVo" />
+		<typeAlias alias="CategoryVo" type="com.bitacademy.jblog.repository.CategoryVo" />
+		<typeAlias alias="PostVo" type="com.bitacademy.jblog.repository.PostVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="/mybatis/mappers/user.xml"/>
-		<mapper resource="/mybatis/mappers/blog.xml"/>	
+		<mapper resource="/mybatis/mappers/blog.xml"/>
+		<mapper resource="/mybatis/mappers/category.xml"/>	
+		<mapper resource="/mybatis/mappers/post.xml"/>		
 	</mappers>
 </configuration>

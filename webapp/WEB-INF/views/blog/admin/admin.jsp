@@ -19,17 +19,27 @@
         <div id="main">
             <nav class="tab-btn">
                 <ul>
-                    <li class="active"><a href="<c:url value="/${authUser.id }/admin/basic"/>">기본설정</a></li>
+                    <li><a href="<c:url value="/${authUser.id }/admin/basic"/>">기본설정</a></li>
                     <li><a href="<c:url value="/${authUser.id }/admin/category"/>">카테고리</a></li>
                     <li><a href="<c:url value="/${authUser.id }/admin/post"/>">글 작성</a></li>
                 </ul>
             </nav>
 			<div id="content" class="tab-cont">
-				
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-category.jsp" charEncoding="UTF-8"/>
-				<c:import url="/WEB-INF/views/blog/admin/includes/admin-post.jsp" charEncoding="UTF-8"/>
-				
+				<c:choose>
+					<c:when test="${opt eq 'basic' }">
+						<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
+					</c:when>
+					<c:when test="${opt eq 'category' }">
+						<c:import url="/WEB-INF/views/blog/admin/includes/admin-category.jsp" charEncoding="UTF-8"/>
+					</c:when>
+					<c:when test="${opt eq 'post' }">
+						<c:import url="/WEB-INF/views/blog/admin/includes/admin-post.jsp" charEncoding="UTF-8"/>
+					</c:when>
+					<c:otherwise>
+						<c:import url="/WEB-INF/views/blog/admin/includes/admin-basic.jsp" charEncoding="UTF-8"/>
+					</c:otherwise>				
+				</c:choose>
+	
             </div>
 
             <div id="sidemenu">
@@ -48,6 +58,7 @@
     </div>
 
 	</body>
+<!--  
 	<script>
 	
     $(function () {
@@ -58,7 +69,7 @@
 
         tabBtn.click(function (e) {
             e.preventDefault();
-            var target = $(this);
+           var target = $(this);
             var index = target.index();
             tabBtn.removeClass("active");
             target.addClass("active");
@@ -66,6 +77,7 @@
             tabCont.eq(index).css("display", "block");
         });
     });
-    
+    -->
 </script>
+
 </html>

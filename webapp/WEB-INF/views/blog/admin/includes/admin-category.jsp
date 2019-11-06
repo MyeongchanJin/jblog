@@ -10,13 +10,15 @@
             	<th>설명</th>
             	<th>삭제</th>
         	</tr>
-        	<tr>
-            	<td>${cateNo}</td>
-            	<td>${cateName}</td>
-            	<td>포스트 수---post</td>
-            	<td>${description}</td>
-            	<td><button type="button">삭제</button></td>
-            </tr>
+        	<c:forEach items="${categoryList }" var="cvo">
+        	    <tr>
+            		<td>${cvo.cateNo}</td>
+            		<td>${cvo.cateName}</td>
+            		<td>포스트 갯수 작업예정(post.xml)</td>
+            		<td>${cvo.description}</td>
+            		<td><button type="button">삭제</button></td>
+            	</tr>
+        	</c:forEach>
         </table>
     </div>
     <div class="add-category-box">

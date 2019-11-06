@@ -3,15 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- Set Board 4-3. Create mapper file  -->
 <mapper namespace="blog">
-	<select id="selectAll" resultType="BlogVo">
-	<![CDATA[
-		SELECT b.no, b.title, b.hit, b.regdate, b.member_no memberNo, m.name memberName
-		FROM board b, members m
-		WHERE b.member_no = m.no
-		ORDER BY regdate DESC
-	]]>
-	</select>
-	
+
 	<select id="selectByUserNo" parameterType="string" resultType="BlogVo">
 	<![CDATA[
 		SELECT userNo, blogTitle, logoFile FROM blog
@@ -19,7 +11,6 @@
 	]]>
 	</select>
 	
-	<!-- Set Board 5-7-7. Write SQL Query -->
 	<insert id="insert" parameterType="BlogVo">
 	<![CDATA[
 		INSERT INTO board (no, title, content, member_no)

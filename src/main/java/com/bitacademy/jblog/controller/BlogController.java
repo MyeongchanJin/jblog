@@ -1,19 +1,24 @@
 package com.bitacademy.jblog.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitacademy.jblog.repository.BlogVo;
+import com.bitacademy.jblog.repository.CategoryVo;
 import com.bitacademy.jblog.repository.UserVo;
 import com.bitacademy.jblog.service.BlogService;
+import com.bitacademy.jblog.service.CategoryService;
 import com.bitacademy.jblog.service.UserService;
 
 @Controller
@@ -27,19 +32,15 @@ public class BlogController {
 	@Autowired
 	BlogService blogService;
 	
+	@Autowired
+	CategoryService categoryService;
+	
 	//블로거
 	@RequestMapping
 	public String blogMain(@PathVariable("id") String id, HttpSession session) {
 		
 		logger.debug("블로그로 이동->");
-//		UserVo bloger = userService.getUser(id);
-//		BlogVo blog = blogService.getBlogUser(bloger.getUserNo());
-//		session.setAttribute("blog", blog);
-//		logger.debug("bloger: " + bloger);		 
-//		logger.debug("blog: " + session.getAttribute("blog"));				
-//		logger.debug("authUser: " + session.getAttribute("authUser"));
-//		
-//		session.setAttribute("bloger", bloger);
+
 		logger.debug("Get Sesison");
 		logger.debug("authUser: " + session.getAttribute("authUser"));
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
@@ -57,53 +58,128 @@ public class BlogController {
 	}
 	
 	//관리자
-	@RequestMapping("/admin/settings")
-	public String blogSettings(@PathVariable("id") String id, HttpSession session) {
-		logger.debug("내블로그 관리->");
+//	@RequestMapping("/admin/basic")
+//	public String blogSettings(@PathVariable("id") String id, HttpSession session) {
+//		logger.debug("내블로그 관리(basic)->");
+//
+//		logger.debug("authUser: " + session.getAttribute("authUser"));
+//		logger.debug("authBlog: " + session.getAttribute("authBlog"));
+//		logger.debug("bloger: " + session.getAttribute("bloger"));
+//		logger.debug("blog: " + session.getAttribute("blog"));
+//				
+//		logger.debug("----------------------------");
+//		return "blog/admin/admin";
+//	}
+	
+	@RequestMapping("/admin/{option}")
+	public String settings(
+			@PathVariable("id") String id,
+			@PathVariable("option") String option,
+			Model model,
+			HttpSession session) {
+		logger.debug("내블로그 관리(" + option + ")->");
+
+		session.setAttribute("opt", option);
+		logger.debug("option: " + option);
+		
+		if ("category".equals(option)) {
+			logger.debug("CategoryList->");
+			List<CategoryVo> categoryList = categoryService.getCategoryList();
+			model.addAttribute("categoryList", categoryList);
+			
+			logger.debug("Category: " + categoryList);
+		}
 
 		logger.debug("authUser: " + session.getAttribute("authUser"));
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
 		logger.debug("bloger: " + session.getAttribute("bloger"));
 		logger.debug("blog: " + session.getAttribute("blog"));
-		
 		
 		logger.debug("----------------------------");
 		return "blog/admin/admin";
 	}
 	
-	@RequestMapping(value="/admin/settings", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 	public String setBasic(
 			@RequestParam(value="blog-title") String blogTitle,
+			/* Multipart로 형변환 하기 */
+			@RequestParam(value="blog-logo") String logoFile,
 			HttpSession session) {
 		
 		logger.debug("기본설정 변경 액션->");
-
+		
 		BlogVo authBlogTemp = (BlogVo)session.getAttribute("authBlog");
 		BlogVo blogTemp = (BlogVo)session.getAttribute("blog");
 		
 		boolean isSuccess = false;
 		
-		if (blogTitle == "" || blogTitle == null) {
-			authBlogTemp.setBlogTitle(authBlogTemp.getBlogTitle());			
-		} else {
-			authBlogTemp.setBlogTitle(blogTitle);
-			blogTemp.setBlogTitle(blogTitle);
-			
-			isSuccess = blogService.updateBlogTitle(blogTemp);
-			logger.debug("BlogTitle updated");
+		/* null 처리 필요함 */
+		/*
+		 * 기본값 넣어주어 처리함
+		 * 
+		if (blogTitle == " " || blogTitle == null) {
+			logger.debug("input null: " + blogTitle);
+			blogTitle = authBlogTemp.getBlogTitle();		
 		}
+		*/
 		
+		logger.debug(blogTitle);
+		logger.debug("input not null: " + blogTitle);
+		authBlogTemp.setBlogTitle(blogTitle);
+		blogTemp.setBlogTitle(blogTitle);
 			
+		isSuccess = blogService.updateBlogTitle(blogTemp);
+		logger.debug("BlogTitle updated");
+							
 		logger.debug("authUser: " + session.getAttribute("authUser"));
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
 		logger.debug("bloger: " + session.getAttribute("bloger"));
 		logger.debug("blog: " + session.getAttribute("blog"));
 		
 		logger.debug("----------------------------");
-		
+
 		return "redirect:/{id}";
 	}
 	
+	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
+	public String insertCategory(
+			@RequestParam(value="cate-name") String cateName,
+			@RequestParam(value="cate-desc") String description,
+			HttpSession session) {
+		
+		logger.debug("기본설정 변경 액션(category)->");
+
+		//	insert into category table	
+		
+		logger.debug("authUser: " + session.getAttribute("authUser"));
+		logger.debug("authBlog: " + session.getAttribute("authBlog"));
+		logger.debug("bloger: " + session.getAttribute("bloger"));
+		logger.debug("blog: " + session.getAttribute("blog"));
+		
+		logger.debug("----------------------------");
+
+		return "redirect:/{id}";
+	}
+	
+	@RequestMapping(value="/admin/post", method=RequestMethod.POST)
+	public String setPost(
+			@RequestParam(value="post-title") String cateName,
+			@RequestParam(value="post-category") String description,
+			@RequestParam(value="post-content")
+			HttpSession session) {
+		
+		logger.debug("기본설정 변경 액션(post)->");
+		
+	
+		logger.debug("authUser: " + session.getAttribute("authUser"));
+		logger.debug("authBlog: " + session.getAttribute("authBlog"));
+		logger.debug("bloger: " + session.getAttribute("bloger"));
+		logger.debug("blog: " + session.getAttribute("blog"));
+		
+		logger.debug("----------------------------");
+
+		return "redirect:/{id}";
+	}
 	/*
 	@RequestMapping(value="/admin/settings", method=RequestMethod.POST)
 	public String updateBasicSettings(
