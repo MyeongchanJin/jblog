@@ -10,14 +10,31 @@
             	<th>설명</th>
             	<th>삭제</th>
         	</tr>
-        	<c:forEach items="${categoryList }" var="cvo">
-        	    <tr>
-            		<td>${cvo.cateNo}</td>
-            		<td>${cvo.cateName}</td>
-            		<td>포스트 갯수 작업예정(post.xml)</td>
-            		<td>${cvo.description}</td>
-            		<td><button type="button">삭제</button></td>
-            	</tr>
+        	<c:forEach items="${categoryList }" var="cvo" varStatus="status">
+	        	<c:choose>
+	        	    <c:when test="${not empty postNumList }">
+		        		<c:forEach items="${postNumList }" var="pnl">
+			        		<c:if test="${cvo.cateNo eq pnl.cateNo }">	
+				        	    <tr>
+				            		<td>${cvo.cateNo}</td>
+				            		<td>${cvo.cateName}</td>
+				            		<td>${pnl.description}</td>
+				            		<td>${cvo.description}</td>
+				            		<td><button type="button">삭제</button></td>
+				            	</tr>
+				            </c:if>
+			            </c:forEach>	
+	        		</c:when>
+	        		<c:when test="${empty postNumList }">
+		        	    <tr>
+		            		<td>${cvo.cateNo}</td>
+		            		<td>${cvo.cateName}</td>
+		            		<td>0</td>
+		            		<td>${cvo.description}</td>
+		            		<td><button type="button">삭제</button></td>
+		            	</tr>
+	        		</c:when>
+	        	</c:choose>
         	</c:forEach>
         </table>
     </div>

@@ -6,5 +6,5 @@ public interface BlogDao {
 	public List<BlogVo> selectAll();
 	public BlogVo selectBlogUser(Long no);
 	public int insert(BlogVo vo);
-	public int updateBlogTitle(BlogVo bvo);
+	public int updateBlog(BlogVo bvo);
 }

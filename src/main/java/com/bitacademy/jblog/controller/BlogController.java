@@ -1,5 +1,9 @@
 package com.bitacademy.jblog.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bitacademy.jblog.repository.BlogVo;
 import com.bitacademy.jblog.repository.CategoryVo;
@@ -30,6 +35,18 @@ import com.bitacademy.jblog.service.UserService;
 public class BlogController {
 	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	
+	private static void logging(HttpSession session) {
+		logger.debug("postNumList: " + session.getAttribute("postNumList"));
+		logger.debug("authUser: " + session.getAttribute("authUser"));
+		logger.debug("authBlog: " + session.getAttribute("authBlog"));
+		logger.debug("bloger: " + session.getAttribute("bloger"));
+		logger.debug("blog: " + session.getAttribute("blog"));
+		logger.debug("category: " + session.getAttribute("categoryList"));
+		logger.debug("postList:"  + session.getAttribute("postList"));
+		
+		logger.debug("----------------------------");
+	}
+	
 	@Autowired
 	UserService userService;
 	
@@ -44,7 +61,7 @@ public class BlogController {
 	
 	//블로거
 	@RequestMapping
-	public String blogMain(@PathVariable("id") String id, HttpSession session) {
+	public String blogMain(@PathVariable("id") String id, HttpSession session, Model model) {
 		
 		logger.debug("블로그로 이동->");
 
@@ -53,20 +70,33 @@ public class BlogController {
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
 		logger.debug("Set Session");
 		UserVo bloger = userService.getUser(id);
+		logger.debug("currentId: " + id);
+		logger.debug("set bloger: " + bloger);
 		BlogVo blog = blogService.getBlogByUserNo(bloger.getUserNo());
-		List<CategoryVo> categoryList = categoryService.getCategoryList();
+		logger.debug("set blog");
+		List<CategoryVo> categoryList = categoryService.getCategoryList();	
+		logger.debug("Set categoryList");
+		List<CategoryVo> postNumList = categoryService.getPostNum();
+//		for (CategoryVo cvo: postNumList) {
+//			//cvo.setRegDate();
+//			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//			Date convertedDate = format.parse(cvo.getRegDate());
+//			
+//		}
+		
+		logger.debug("Set postNumList");
+		List<PostVo> postList = postService.getPostList();
+		logger.debug("Set postList");
+		
+		session.setAttribute("postList", postList);
+		session.setAttribute("postNumList", postNumList);
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("bloger", bloger);
 		session.setAttribute("blog", blog);
-		logger.debug("category: " + session.getAttribute("categoryList"));
-		logger.debug("bloger: " + session.getAttribute("bloger"));
-		logger.debug("blog: " + session.getAttribute("blog"));
-		logger.debug("----------------------------");
-
-		
+			
+		logging(session);
 		return "blog/blogmain";
 	}
-	
 	
 	@RequestMapping("/admin/{option}")
 	public String settings(
@@ -88,52 +118,53 @@ public class BlogController {
 			categoryListModel.addAttribute("categoryList", categoryList);
 			logger.debug("Category: " + categoryList);
 			
+			logging(session);
+			return "blog/admin/admin-category";
+			
 		} else if ("write".equals(option)) {
 			logger.debug("PostList->");
 			List<PostVo> postList = postService.getPostList();
 			model.addAttribute("postList", postList);
 			logger.debug("post: " + postList);
+			
+			logging(session);
+			return "blog/admin/admin-post";
+		} else if ("basic".equals(option)){
+			logging(session);
+			logger.debug("id? " + id);
+			return "blog/admin/admin-basic";
+		} else {
+			return "redirect:/";
 		}
-
-		logger.debug("authUser: " + session.getAttribute("authUser"));
-		logger.debug("authBlog: " + session.getAttribute("authBlog"));
-		logger.debug("bloger: " + session.getAttribute("bloger"));
-		logger.debug("blog: " + session.getAttribute("blog"));
-		logger.debug("category: " + session.getAttribute("categoryList"));
 		
-		logger.debug("----------------------------");
-		return "blog/admin/admin";
+
 	}
 	
 	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 	public String setBasic(
 			@RequestParam(value="blog-title") String blogTitle,
 			/* Multipart로 형변환 하기 */
-			@RequestParam(value="blog-logo") String logoFile,
+			@RequestParam(value="blog-logo") MultipartFile logoFile,
+			Model modelFile,
 			HttpSession session) {
 		
 		logger.debug("기본설정 변경 액션->");
 		
 		BlogVo authBlogTemp = (BlogVo)session.getAttribute("authBlog");
-		BlogVo blogTemp = (BlogVo)session.getAttribute("blog");
-		
+		BlogVo blogTemp = (BlogVo)session.getAttribute("blog");		
 		boolean isSuccess = false;
 		
 		logger.debug(blogTitle);
-		logger.debug("input not null: " + blogTitle);
 		authBlogTemp.setBlogTitle(blogTitle);
 		blogTemp.setBlogTitle(blogTitle);
-			
-		isSuccess = blogService.updateBlogTitle(blogTemp);
-		logger.debug("BlogTitle updated");
-							
-		logger.debug("authUser: " + session.getAttribute("authUser"));
-		logger.debug("authBlog: " + session.getAttribute("authBlog"));
-		logger.debug("bloger: " + session.getAttribute("bloger"));
-		logger.debug("blog: " + session.getAttribute("blog"));
-		logger.debug("category: " + session.getAttribute("categoryList"));
 		
-		logger.debug("----------------------------");
+		
+		logger.debug("MultipartFile: " + logoFile);
+		String logoFilename = blogService.storeFile(logoFile, authBlogTemp);
+		isSuccess = blogService.updateBlog(blogTemp);
+		logger.debug("Blog updated");		
+		
+		logging(session);
 
 		return "redirect:/{id}";
 	}
@@ -168,15 +199,7 @@ public class BlogController {
 		logger.debug("Category: " + categoryList);
 		
 
-		
-		logger.debug("authUser: " + session.getAttribute("authUser"));
-		logger.debug("authBlog: " + session.getAttribute("authBlog"));
-		logger.debug("bloger: " + session.getAttribute("bloger"));
-		logger.debug("blog: " + session.getAttribute("blog"));
-		logger.debug("category: " + session.getAttribute("categoryList"));
-		
-		logger.debug("----------------------------");
-
+		logging(session);
 		return "blog/admin/admin-category";
 	}
 	
@@ -193,11 +216,11 @@ public class BlogController {
 		
 		logger.debug("insert call");
 		
-		logger.debug("PostList->");
-		List<PostVo> postList = postService.getPostList();
-		model.addAttribute("postList", postList);
+		//logger.debug("PostList->");
+		//List<PostVo> postList = postService.getPostList();
+		//model.addAttribute("postList", postList);
 		
-		logger.debug("post: " + postList);
+		//logger.debug("post: " + postList);
 		
 		logger.debug("post-title: " + postTitle);
 		logger.debug("post-category: " + cateNo);
@@ -213,13 +236,7 @@ public class BlogController {
 		
 		logger.debug("-----------------------------");
 	
-		logger.debug("authUser: " + session.getAttribute("authUser"));
-		logger.debug("authBlog: " + session.getAttribute("authBlog"));
-		logger.debug("bloger: " + session.getAttribute("bloger"));
-		logger.debug("blog: " + session.getAttribute("blog"));
-		logger.debug("category: " + session.getAttribute("categoryList"));
-		
-		logger.debug("----------------------------");
+		logging(session);
 
 		return "redirect:/{id}";
 	}

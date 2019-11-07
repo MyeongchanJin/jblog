@@ -10,7 +10,7 @@
 	    </div>
 		<div class="section section-logo">
 	        <label>로고 이미지</label>
-	        <img width="200px" src="<c:url value="/${blog.logoFile }"/>" alt="">
+	        <img width="200px" src="<c:url value="/images/${blog.logoFile }"/>" alt="">
 	        <br>
 	        <div>
 	        	<input type="file" name="blog-logo">

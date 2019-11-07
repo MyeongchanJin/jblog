@@ -18,9 +18,9 @@
 	]]>
 	</insert>
 	
-	<update id="updateBlogTitle" parameterType="BlogVo">
+	<update id="updateBlog" parameterType="BlogVo">
 	<![CDATA[
-		UPDATE blog SET blogtitle = #{blogTitle} WHERE userNo = #{userNo}
+		UPDATE blog SET blogtitle = #{blogTitle}, logoFile = #{logoFile} WHERE userNo = #{userNo}
 	]]>
 	</update>
 

@@ -12,8 +12,8 @@
 	
 	<insert id="insertBlog" parameterType="UserVo">
 	<![CDATA[
-		INSERT INTO blog(userNo, blogtitle)
-			VALUES (seq_users_no.CURRVAL, #{userName})
+		INSERT INTO blog(userNo, blogtitle, logoFile)
+			VALUES (seq_users_no.CURRVAL, #{userName}, #{logoFile})
 	]]>
 	</insert>
 

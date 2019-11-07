@@ -8,5 +8,5 @@ import com.bitacademy.jblog.repository.CategoryVo;
 public interface CategoryService {
 	public List<CategoryVo> getCategoryList();
 	public boolean insertCategory(CategoryVo cvo);
-	public List<Map<String, String>> getPostNum(CategoryVo cvo);
+	public List<CategoryVo> getPostNum();
 }

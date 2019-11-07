@@ -18,9 +18,10 @@
 	]]>
 	</select>
 	
-	<select id="selectNumOfPost" resultType="map">
+	<select id="selectNumOfPost" resultType="CategoryVo">
 	<![CDATA[
-		SELECT cateNo, COUNT(*) FROM post GROUP BY cateNo;
+		SELECT cateNo, COUNT(*) as description FROM post GROUP BY cateNo
 	]]>
 	</select>
+	
 </mapper>

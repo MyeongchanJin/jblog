@@ -6,7 +6,7 @@
 
 	<select id="selectAllPost" resultType="PostVo">
 	<![CDATA[
-		SELECT postNo, cateNo, postTitle, postContent FROM post
+		SELECT postNo, cateNo, postTitle, postContent, regDate FROM post
 	]]>
 	</select>
 	

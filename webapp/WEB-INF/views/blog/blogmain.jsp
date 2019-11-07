@@ -23,10 +23,29 @@
                 <div>
                     <h4>카테고리</h4>
                     <ul id="category">
-                        <li>미분류</li>
-                    </ul>
+                    	<li>미분류?</li>
+                        <c:forEach items="${categoryList }" var="clist">
+
+	                        	<li><a href="<c:url value="#"/>">${clist.cateName}</a></li>
+
+                        </c:forEach>
+					</ul>
                 </div>
             </div>
+
+            <div id="postList">
+            	<ul>
+            		<c:forEach items="${postList }" var="plist">
+						<ul>
+							<li><a href="#">${plist.postTitle }</a></li>
+							<li>${plist.regDate }</li>
+						</ul>
+            				
+
+            		</c:forEach>
+            	</ul>
+            </div>
+
         </div>
 	<c:import url="/WEB-INF/views/includes/blog-footer.jsp"/>
 </div>

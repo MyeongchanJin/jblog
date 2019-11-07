@@ -24,11 +24,13 @@ public class CategoryDaoImpl implements CategoryDao {
 		int insertedCategoryCount = sqlSession.insert("category.insertCategory", cvo);
 		return insertedCategoryCount;
 	}
-	
+
 	@Override
-	public List<Map<String, String>> getNumOfPost(CategoryVo cvo) {
-		List<Map<String, String>> postNumList = sqlSession.selectList("post.selectNumOfPost", cvo);
+	public List<CategoryVo> getNumOfPost() {
+		List<CategoryVo> postNumList = sqlSession.selectList("category.selectNumOfPost");
 		return postNumList;
 	}
+	
+
 
 }

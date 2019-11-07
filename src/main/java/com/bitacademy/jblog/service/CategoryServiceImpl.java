@@ -28,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public List<Map<String, String>> getPostNum(CategoryVo cvo) {
-		List<Map<String, String>> numList = categoryDao.getNumOfPost(cvo);
+	public List<CategoryVo> getPostNum() {
+		List<CategoryVo> numList = categoryDao.getNumOfPost();
 		return numList;
 	}
 
