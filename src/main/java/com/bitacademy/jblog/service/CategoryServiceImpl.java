@@ -16,8 +16,8 @@ public class CategoryServiceImpl implements CategoryService {
 	CategoryDao categoryDao;
 	
 	@Override
-	public List<CategoryVo> getCategoryList() {
-		List<CategoryVo> categoryList = categoryDao.selectAllCategory();
+	public List<CategoryVo> getCategoryList(Long userNo) {
+		List<CategoryVo> categoryList = categoryDao.selectAllCategory(userNo);
 		return categoryList;
 	}
 

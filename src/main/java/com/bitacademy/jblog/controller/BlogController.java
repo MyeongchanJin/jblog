@@ -74,7 +74,7 @@ public class BlogController {
 		logger.debug("set bloger: " + bloger);
 		BlogVo blog = blogService.getBlogByUserNo(bloger.getUserNo());
 		logger.debug("set blog");
-		List<CategoryVo> categoryList = categoryService.getCategoryList();	
+		List<CategoryVo> categoryList = categoryService.getCategoryList(blog.getUserNo());	
 		logger.debug("Set categoryList");
 		List<CategoryVo> postNumList = categoryService.getPostNum();
 //		for (CategoryVo cvo: postNumList) {
@@ -114,7 +114,8 @@ public class BlogController {
 		
 		if ("category".equals(option)) {
 			logger.debug("CategoryList->");
-			List<CategoryVo> categoryList = categoryService.getCategoryList();
+			List<CategoryVo> categoryList =
+					categoryService.getCategoryList(((BlogVo) session.getAttribute("blog")).getUserNo());
 			categoryListModel.addAttribute("categoryList", categoryList);
 			logger.debug("Category: " + categoryList);
 			
@@ -194,7 +195,7 @@ public class BlogController {
 		
 		
 		logger.debug("CategoryList->");
-		List<CategoryVo> categoryList = categoryService.getCategoryList();
+		List<CategoryVo> categoryList = categoryService.getCategoryList(((BlogVo) session.getAttribute("blog")).getUserNo());
 		categoryListModel.addAttribute("categoryList", categoryList);
 		logger.debug("Category: " + categoryList);
 		

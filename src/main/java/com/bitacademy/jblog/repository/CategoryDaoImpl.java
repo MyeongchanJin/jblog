@@ -14,8 +14,8 @@ public class CategoryDaoImpl implements CategoryDao {
 	SqlSession sqlSession;
 
 	@Override
-	public List<CategoryVo> selectAllCategory() {
-		List<CategoryVo> categorylist = sqlSession.selectList("category.selectAllCategory");
+	public List<CategoryVo> selectAllCategory(Long userNo) {
+		List<CategoryVo> categorylist = sqlSession.selectList("category.selectAllCategoryByUserNo", userNo);
 		return categorylist;
 	}
 

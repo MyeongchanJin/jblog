@@ -11,12 +11,25 @@
 	]]>
 	</insert>
 	
-	<select id="selectAllCategory" resultType="CategoryVo">
+	<select id="selectAllCategoryByUserNo" parameterType="long" resultType="CategoryVo">
 	<![CDATA[
-		SELECT cateNo, userNo, cateName, description, regDate FROM category
-		ORDER BY cateNo DESC
+		SELECT
+		    c.userNo as userNo,
+		    c.cateNo as cateNo,
+		    c.cateName as cateName,
+		    c.description as description,
+		    c.regDate as regDate,
+		    TO_CHAR(c.regDate, 'yyyy/MM/dd') as regDateToChar,
+		    COUNT(p.cateNo) postNum FROM post p, category c
+		WHERE p.cateNo (+) = c.cateNo AND userNo = #{userNo}
+		GROUP BY c.userNo, c.cateNo, c.cateName, c.description, c.regDate, TO_CHAR(c.regDate, 'yyyy/MM/dd')
+		ORDER BY c.cateNo DESC
 	]]>
 	</select>
+	<!--
+		SELECT cateNo, userNo, cateName, description, regDate FROM category
+		ORDER BY cateNo DESC
+	-->
 	
 	<select id="selectNumOfPost" resultType="CategoryVo">
 	<![CDATA[

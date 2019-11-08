@@ -16,6 +16,10 @@ public class CategoryVo {
 	
 	private String description;
 	
+	private String postNum;
+	
+	private String regDateToChar;
+	
 	@NotEmpty
 	private Date regDate;
 
@@ -58,10 +62,30 @@ public class CategoryVo {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
+	public String getPostNum() {
+		return postNum;
+	}
+
+	public void setPostNum(String postNum) {
+		this.postNum = postNum;
+	}
+
+	public String getRegDateToChar() {
+		return regDateToChar;
+	}
+
+	public void setRegDateToChar(String regDateToChar) {
+		this.regDateToChar = regDateToChar;
+	}
 
 	@Override
 	public String toString() {
-		return "CategoryVo [cateNo=" + cateNo + ", userNo=" + userNo + ", cateName=" + cateName + ", description="
-				+ description + ", regDate=" + regDate + "]";
+		return "CategoryVo [\ncateNo=" + cateNo + "\nuserNo=" + userNo + "\ncateName=" + cateName + "\ndescription="
+				+ description + "\npostNum=" + postNum + "\nregDateToChar=" + regDateToChar + "\nregDate=" + regDate
+				+ "\n]";
 	}
+
+	
 }
+

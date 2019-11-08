@@ -6,7 +6,7 @@ import java.util.Map;
 import com.bitacademy.jblog.repository.CategoryVo;
 
 public interface CategoryService {
-	public List<CategoryVo> getCategoryList();
+	public List<CategoryVo> getCategoryList(Long userNo);
 	public boolean insertCategory(CategoryVo cvo);
 	public List<CategoryVo> getPostNum();
 }
