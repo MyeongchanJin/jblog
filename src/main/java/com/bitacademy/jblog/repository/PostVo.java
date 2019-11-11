@@ -19,6 +19,8 @@ public class PostVo {
 	
 	@NotEmpty
 	private Date regDate;
+	
+	private String regDateToChar;
 
 	public Long getPostNo() {
 		return postNo;
@@ -60,11 +62,21 @@ public class PostVo {
 		this.regDate = regDate;
 	}
 
+	public String getRegDateToChar() {
+		return regDateToChar;
+	}
+
+	public void setRegDateToChar(String regDateToChar) {
+		this.regDateToChar = regDateToChar;
+	}
+
 	@Override
 	public String toString() {
-		return "PostVo [postNo=" + postNo + ", cateNo=" + cateNo + ", postTitle=" + postTitle + ", postContent="
-				+ postContent + ", regDate=" + regDate + "]";
+		return "PostVo [postNo=" + postNo + ", cateNo=" + cateNo + ", postTitle=" + postTitle + "\npostContent="
+				+ postContent + "\nregDate=" + regDate + ", regDateToChar=" + regDateToChar + "]";
 	}
+
+
 
 	
 }

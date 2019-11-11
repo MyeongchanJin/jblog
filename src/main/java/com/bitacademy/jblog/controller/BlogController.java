@@ -36,7 +36,7 @@ public class BlogController {
 	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	
 	private static void logging(HttpSession session) {
-		logger.debug("postNumList: " + session.getAttribute("postNumList"));
+		//logger.debug("postNumList: " + session.getAttribute("postNumList"));
 		logger.debug("authUser: " + session.getAttribute("authUser"));
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
 		logger.debug("bloger: " + session.getAttribute("bloger"));
@@ -60,11 +60,28 @@ public class BlogController {
 	PostService postService;
 	
 	//블로거
-	@RequestMapping
-	public String blogMain(@PathVariable("id") String id, HttpSession session, Model model) {
+	@RequestMapping(value="", method=RequestMethod.GET)
+	public String blogMain(
+			@RequestParam(required=false, value="cateNo") String cateNo,
+			@PathVariable("id") String id,
+			HttpSession session,
+			Model model) {
 		
-		logger.debug("블로그로 이동->");
-
+		logger.debug("블로그로 이동(cateNo:" + cateNo + ")->");
+		
+		
+		session.setAttribute("cateNo(clicked)", cateNo);
+		List<PostVo> postList = null;
+		if (cateNo == null) {
+			logger.debug("cateNo:"+cateNo);
+			postList = postService.getPostList();
+		} else {
+			logger.debug("cateNo:"+cateNo);
+			postList = postService.getPostList(Long.valueOf(cateNo));
+		}
+		session.setAttribute("postList", postList);
+		logger.debug("Set postList");
+		
 		logger.debug("Get Sesison");
 		logger.debug("authUser: " + session.getAttribute("authUser"));
 		logger.debug("authBlog: " + session.getAttribute("authBlog"));
@@ -76,20 +93,14 @@ public class BlogController {
 		logger.debug("set blog");
 		List<CategoryVo> categoryList = categoryService.getCategoryList(blog.getUserNo());	
 		logger.debug("Set categoryList");
-		List<CategoryVo> postNumList = categoryService.getPostNum();
-//		for (CategoryVo cvo: postNumList) {
-//			//cvo.setRegDate();
-//			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-//			Date convertedDate = format.parse(cvo.getRegDate());
-//			
-//		}
+		//List<CategoryVo> postNumList = categoryService.getPostNum();
+				
+		//logger.debug("Set postNumList xxx");
+		//List<PostVo> postList = postService.getPostList(blog.getUserNo());
 		
-		logger.debug("Set postNumList");
-		List<PostVo> postList = postService.getPostList();
-		logger.debug("Set postList");
-		
-		session.setAttribute("postList", postList);
-		session.setAttribute("postNumList", postNumList);
+
+		//session.setAttribute("postList", postList);
+		//session.setAttribute("postNumList", postNumList);
 		session.setAttribute("categoryList", categoryList);
 		session.setAttribute("bloger", bloger);
 		session.setAttribute("blog", blog);
@@ -114,8 +125,9 @@ public class BlogController {
 		
 		if ("category".equals(option)) {
 			logger.debug("CategoryList->");
+			Long blogUserNo = ((BlogVo) session.getAttribute("blog")).getUserNo();
 			List<CategoryVo> categoryList =
-					categoryService.getCategoryList(((BlogVo) session.getAttribute("blog")).getUserNo());
+					categoryService.getCategoryList(blogUserNo);
 			categoryListModel.addAttribute("categoryList", categoryList);
 			logger.debug("Category: " + categoryList);
 			
@@ -124,9 +136,11 @@ public class BlogController {
 			
 		} else if ("write".equals(option)) {
 			logger.debug("PostList->");
-			List<PostVo> postList = postService.getPostList();
-			model.addAttribute("postList", postList);
-			logger.debug("post: " + postList);
+			//Long blogUserNo = ((BlogVo)session.getAttribute("blog")).getUserNo();
+			
+			//List<PostVo> postList = postService.getPostList();
+			//model.addAttribute("postList", postList);
+			logger.debug("post: " + session.getAttribute("postList"));
 			
 			logging(session);
 			return "blog/admin/admin-post";

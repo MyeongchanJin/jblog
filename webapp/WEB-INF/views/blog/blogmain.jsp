@@ -21,12 +21,12 @@
                     <img alt="" src="" />
                 </div>
                 <div>
-                    <h4>카테고리</h4>
+                    <h4><a href="<c:url value="/${bloger.id } "/>">카테고리</a></h4>
                     <ul id="category">
                     	<li>미분류?</li>
                         <c:forEach items="${categoryList }" var="clist">
 
-	                        	<li><a href="<c:url value="#"/>">${clist.cateName}</a></li>
+	                        	<li><a href="<c:url value="/${bloger.id}?cateNo=${clist.cateNo }"/>">${clist.cateName}</a></li>
 
                         </c:forEach>
 					</ul>

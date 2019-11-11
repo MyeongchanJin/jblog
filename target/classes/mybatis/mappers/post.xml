@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- Set Board 4-3. Create mapper file  -->
+
 <mapper namespace="post">
 
+	<select id="selectAllPostByCateNo" parameterType="long" resultType="PostVo">
+	<![CDATA[
+		SELECT postNo, cateNo, postTitle, postConTent, regDate, TO_CHAR(regDate, 'yyyy/MM/dd') regDateToChar FROM post
+		WHERE cateNo = #{cateNo}
+	]]>
+	</select>
+	
 	<select id="selectAllPost" resultType="PostVo">
 	<![CDATA[
-		SELECT postNo, cateNo, postTitle, postContent, regDate FROM post
+		SELECT postNo, cateNo, postTitle, postConTent, regDate, TO_CHAR(regDate, 'yyyy/MM/dd') regDateToChar FROM post
 	]]>
 	</select>
 	

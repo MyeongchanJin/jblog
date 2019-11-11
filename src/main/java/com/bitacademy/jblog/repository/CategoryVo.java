@@ -81,9 +81,9 @@ public class CategoryVo {
 
 	@Override
 	public String toString() {
-		return "CategoryVo [\ncateNo=" + cateNo + "\nuserNo=" + userNo + "\ncateName=" + cateName + "\ndescription="
-				+ description + "\npostNum=" + postNum + "\nregDateToChar=" + regDateToChar + "\nregDate=" + regDate
-				+ "\n]";
+		return "CategoryVo [cateNo=" + cateNo + "userNo=" + userNo + "cateName=" + cateName + "\ndescription="
+				+ description + "\npostNum=" + postNum + "regDateToChar=" + regDateToChar + "regDate=" + regDate
+				+ "]";
 	}
 
 	

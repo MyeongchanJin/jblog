@@ -13,11 +13,17 @@ public class PostDaoImpl implements PostDao {
 	SqlSession sqlSession;
 	
 	@Override
+	public List<PostVo> getPostList(Long cateNo) {
+		List<PostVo> postList = sqlSession.selectList("post.selectAllPostByCateNo", cateNo);
+		return postList;
+	}
+
+	@Override
 	public List<PostVo> getPostList() {
 		List<PostVo> postList = sqlSession.selectList("post.selectAllPost");
 		return postList;
 	}
-	
+
 	@Override
 	public int write(PostVo pvo) {
 		int insertedPostCount = sqlSession.insert("post.insertPost", pvo);

@@ -16,8 +16,8 @@ public class PostServiceImpl implements PostService {
 	PostDao postDao;
 	
 	@Override
-	public List<PostVo> getPostList() {
-		List<PostVo> postList = postDao.getPostList();
+	public List<PostVo> getPostList(Long cateNo) {
+		List<PostVo> postList = postDao.getPostList(cateNo);
 		return postList;
 	}
 	
@@ -25,6 +25,12 @@ public class PostServiceImpl implements PostService {
 	public boolean insertPost(PostVo pvo) {
 		int insertedPostCount = postDao.write(pvo);
 		return 1 == insertedPostCount;
+	}
+
+	@Override
+	public List<PostVo> getPostList() {
+		List<PostVo> postList = postDao.getPostList();
+		return postList;
 	}
 
 
